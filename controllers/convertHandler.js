@@ -14,11 +14,14 @@ function ConvertHandler() {
   const metric = ['L', 'Km', 'Kg'];
   const imperial = ['gal', 'mi', 'lbs'];
   const bothSystems = metric.concat(imperial).map(x => x.toLowerCase())
-  const longUnits = ['litres', 'kilometres', 'kilograms', 'gallons', 'miles', 'pounds']
+  const longUnits = ['litres', 'kilometers', 'kilograms', 'gallons', 'miles', 'pounds']
 
   this.getNum = function (input) {
     if (input == '' || input == undefined) {
       return 'invalid'
+    }
+    if (bothSystems.includes(input.toLowerCase())) {
+      return 1
     }
     let result = numSplit(input, true)
 
@@ -34,14 +37,13 @@ function ConvertHandler() {
   this.getReturnUnit = function (initUnit) {
     let metricLocale = metric.map(x => x.toLowerCase()).indexOf(initUnit);
     let imperialLocale = imperial.map(x => x.toLowerCase()).indexOf(initUnit);
-    console.log('metric', metricLocale, 'imperial', imperialLocale)
     if (metricLocale >= 0) {
-      return imperial[metricLocale]
-    } return metric[imperialLocale]
+      return imperial[metricLocale].toLowerCase()
+    } return metric[imperialLocale].toLowerCase()
   };
 
   this.spellOutUnit = function (unit) {
-    let result;
+    let result = longUnits[bothSystems.indexOf(unit)]
 
     return result;
   };
@@ -75,7 +77,7 @@ function ConvertHandler() {
   };
 
   this.getString = function (initNum, initUnit, returnNum, returnUnit) {  
-    return initNum + ' ' + longUnits[bothSystems.indexOf(initUnit)] + ' converts to ' + returnNum + ' ' + longUnits[bothSystems.indexOf(returnUnit.toLowerCase())]
+    return initNum + ' ' + this.spellOutUnit(initUnit) + ' converts to ' + returnNum + ' ' +  this.spellOutUnit(returnUnit.toLowerCase())
   };
 
 }

@@ -27,5 +27,8 @@
 		"freeCodeCamp",
 		"express"
 	],
-	"license": "MIT"
+	"license": "MIT",
+	"devDependencies": {
+		"request": "^2.88.2"
+	}
 }
