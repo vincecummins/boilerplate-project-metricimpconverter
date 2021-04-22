@@ -8,7 +8,7 @@ function ConvertHandler() {
     let numPart = str.match(regex)[0]
     let unitPart = str.replace(numPart, '')
     let num = eval(numPart).toFixed(2)
-    return no ? num : unitPart
+    return no ? parseInt(num) : unitPart
   }
 
   const metric = ['L', 'Km', 'Kg'];
@@ -52,6 +52,7 @@ function ConvertHandler() {
     const galToL = 3.78541;
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
+    
     switch (initUnit) {
       case 'gal':
         return initNum*galToL

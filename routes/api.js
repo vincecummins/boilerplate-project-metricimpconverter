@@ -1,8 +1,8 @@
 'use strict';
 
 const expect = require('chai').expect;
-const bodyParser = require('body-parser');
 const ConvertHandler = require('../controllers/convertHandler.js');
+
 
 module.exports = function (app) {
   
@@ -15,10 +15,17 @@ module.exports = function (app) {
     if (initNum === false || initUnit === false) {
       return res.send('invalid entry')
     }
-    let returnNum = convertHandler.convert(initNum, initUnit).toFixed(2)
+    let returnNum = parseFloat(convertHandler.convert(initNum, initUnit).toFixed(5))
     let returnUnit = convertHandler.getReturnUnit(initUnit)
     let string = convertHandler.getString(initNum, initUnit, returnNum, returnUnit)
-    res.json({initNum, initUnit, returnNum, returnUnit, string})
+    console.log(typeof initNum)
+    let responseObject = {
+      'initNum': initNum,
+      'initUnit': initUnit,
+      'returnNum': returnNum,
+      'returnUnit': returnUnit,
+      'string': string,
+    }
+    res.json(responseObject)
   })
-
 };
